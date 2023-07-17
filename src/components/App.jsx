@@ -1,39 +1,39 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // import { Feedback } from "./Feedback/Feedback";
-import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions";
-import { Statistics } from "./Statistics/Statistics";
-import { Section } from "./Section/Section";
-import { Notification } from "./Message/Message";
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
+import { Statistics } from './Statistics/Statistics';
+import { Section } from './Section/Section';
+import { Notification } from './Message/Message';
 
-export class App extends Component  {
+export class App extends Component {
   state = {
-     good: 0,
-     neutral: 0,
-     bad: 0,
+    good: 0,
+    neutral: 0,
+    bad: 0,
   };
   onLeaveFeedback = state => {
-    
     this.setState(prevValue => ({
-      [state]: prevValue[state] + 1 
+      [state]: prevValue[state] + 1,
     }));
   };
-    countTotal({good,neutral,bad}) {
-        let total;
-        total = good + neutral + bad;
-        return total;
-  };
-    countPositiveFeedbackPercentage({ good }, total) {
-        let positivePercentage = total !== 0 ? Math.round(good / total * 100) : 0;
-        return positivePercentage;
-    }
+  countTotal({ good, neutral, bad }) {
+    let total;
+    total = good + neutral + bad;
+    return total;
+  }
+  countPositiveFeedbackPercentage({ good }, total) {
+    let positivePercentage = total !== 0 ? Math.round((good / total) * 100) : 0;
+    return positivePercentage;
+  }
   render() {
-
     const { good, neutral, bad } = this.state;
     const total = this.countTotal(this.state);
-    const positivePercentage = this.countPositiveFeedbackPercentage(this.state, total);
+    const positivePercentage = this.countPositiveFeedbackPercentage(
+      this.state,
+      total
+    );
     const options = Object.keys(this.state);
     return (
-       
       <div>
         <Section title="Please leave feedback">
           <FeedbackOptions
@@ -41,7 +41,7 @@ export class App extends Component  {
             onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
-        {total !== 0 ?
+        {total !== 0 ? (
           <Section title="Statistics">
             <Statistics
               good={good}
@@ -51,11 +51,10 @@ export class App extends Component  {
               positivePercentage={positivePercentage}
             />
           </Section>
-         
-       : <Notification message="There is no feedback" />
-         }</div >
-      
-    )
-  
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+      </div>
+    );
   }
-};
+}
