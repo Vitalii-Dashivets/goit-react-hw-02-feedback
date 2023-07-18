@@ -16,18 +16,21 @@ export class App extends Component {
       [state]: prevValue[state] + 1,
     }));
   };
-  countTotal({ good, neutral, bad }) {
-    let total;
-    total = good + neutral + bad;
+  countTotal() {
+    let total = Object.values(this.state).reduce((prevValue, number) => {
+      return prevValue + number;
+    }, 0);
+
     return total;
   }
-  countPositiveFeedbackPercentage({ good }, total) {
+  countPositiveFeedbackPercentage({ good }) {
+    const total = this.countTotal();
     let positivePercentage = total !== 0 ? Math.round((good / total) * 100) : 0;
     return positivePercentage;
   }
   render() {
     const { good, neutral, bad } = this.state;
-    const total = this.countTotal(this.state);
+    const total = this.countTotal();
     const positivePercentage = this.countPositiveFeedbackPercentage(
       this.state,
       total

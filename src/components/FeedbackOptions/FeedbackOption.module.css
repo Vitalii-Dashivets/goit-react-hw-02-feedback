@@ -9,3 +9,6 @@
   border-radius: 15px;
   background-color: bisque;
 }
+.button::first-letter {
+  text-transform: uppercase;
+}
